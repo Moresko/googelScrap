@@ -1,11 +1,24 @@
 import './App.css';
+import { useState } from "react";
 
-function App() {
+export default function App() {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleClick = () => {
+    alert(`You entered: ${inputValue}`);
+  };
+
   return (
-    <div className="App">
-      <h2>HELLO</h2>
+    <div >
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Enter something..."
+      />
+      <button onClick={handleClick} >
+        Click Me
+      </button>
     </div>
   );
 }
-
-export default App;
