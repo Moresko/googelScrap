@@ -20,10 +20,11 @@ app.add_middleware(
 class InputData(BaseModel):
     value: str
 
-googleWord = 'liverpool'
 
 @app.post("/string")
+
 def receive_string(data: InputData):
+    global googleWord
     googleWord = data.value
     return {"message": "String received", "value": data.value}
 
