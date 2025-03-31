@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
+from pprint import pprint
 
 app = FastAPI(debug=True)
 
@@ -19,7 +20,7 @@ app.add_middleware(
 class InputData(BaseModel):
     value: str
 
-googleWord = ''
+googleWord = 'liverpool'
 
 @app.post("/string")
 def receive_string(data: InputData):
@@ -30,10 +31,9 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
-print(googleWord)
 payload = {
     'source': 'google',
-    'url': f"https://www.google.com/search?hl=en&q={"dog"}",
+    'url': f"https://www.google.com/search?hl=en&q={googleWord}",
     'parse': True
 }
 
