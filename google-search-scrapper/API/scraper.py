@@ -9,7 +9,7 @@ from io import BytesIO
 app = FastAPI(debug=True)
 
 # address = ["http://localhost:3000"]
-address = ["*"]
+address = ["https://googel-scrap.vercel.app"]
 
 app.add_middleware(
     CORSMiddleware,
