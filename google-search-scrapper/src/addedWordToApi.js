@@ -7,7 +7,7 @@ function App() {
   const pressButton = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:8000/', {
+    const response = await fetch('https://api-npyfbs8z7-mores.vercel.app', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
