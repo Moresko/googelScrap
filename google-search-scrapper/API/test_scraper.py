@@ -6,21 +6,21 @@ import requests
 client = TestClient(app)
 
 def test_value_false():
-    response = client.post("/string", json={"notValue": "test"})
+    response = client.post("/", json={"notValue": "test"})
     assert response.status_code == 422  
 
 def test_value_true():
-    response = client.post("/string", json={"value": "test"})
+    response = client.post("/", json={"value": "test"})
     assert response.status_code == 200 
 
 def test_long_word():
     word = "ab" * 100
-    response = client.post("/string", json={"value": word})
+    response = client.post("/", json={"value": word})
     assert response.status_code == 200
 
 def test_small_word():
     word = "a"
-    response = client.post("/string", json={"value": word})
+    response = client.post("/", json={"value": word})
     assert response.status_code == 200
 
 def test_wrong_password():
@@ -36,7 +36,7 @@ def test_wrong_name():
     assert response.status_code == 401
 
 def test_web_scrapper_file():
-    response = client.post("/string", json={"value": "hello"})  
+    response = client.post("/", json={"value": "hello"})  
     assert response.status_code == 200  
     assert response.headers["Content-Type"].startswith("text/csv")
     assert "Content-Disposition" in response.headers
