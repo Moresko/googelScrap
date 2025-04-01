@@ -33,7 +33,7 @@ function App() {
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder="Enter keyword"
+          placeholder="vyhladat"
         />
         <button type="submit">Stiahnut CSV</button>
       </form>

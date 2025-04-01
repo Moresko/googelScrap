@@ -40,19 +40,14 @@ def receive_string(data: InputData):
 
     job_id = response.json()['results'][0]['job_id']
 
-    # Fetch the CSV result
     response_csv = requests.get(
         url=f'http://data.oxylabs.io/v1/queries/{job_id}/results/normalized?format=csv&page=1',
         auth=('Martin_1AbZT', 'xydWox_1pedpi_jufsab')
     )
 
-    # Create an in-memory binary stream
     csv_file = BytesIO(response_csv.content)
-
-    # Dynamically set the filename to the googleWord
     filename = f"{googleWord}_results.csv"
 
-    # Return the CSV file as a streaming response to trigger the download
     return StreamingResponse(csv_file, media_type="text/csv", headers={"Content-Disposition": f"attachment; filename={googleWord}"})
 
 
