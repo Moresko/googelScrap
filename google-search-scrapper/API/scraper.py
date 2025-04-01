@@ -8,11 +8,12 @@ from io import BytesIO
 
 app = FastAPI(debug=True)
 
-origins = ["http://localhost:3000"]
+# address = ["http://localhost:3000"]
+address = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=address,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,13 +23,13 @@ class InputData(BaseModel):
     value: str
 
 
-@app.post("/string")
+@app.post("/")
 def receive_string(data: InputData):
     global googleWord
     googleWord = data.value
     payload = {
         'source': 'google',
-        'url': f"https://www.google.com/search?hl=en&q={googleWord}",
+        'url': f"https://www.google.com/search?hl=sk&lr=lang_sk&q={googleWord}",
         'parse': True
     }
 
@@ -38,18 +39,17 @@ def receive_string(data: InputData):
         json=payload
     )
 
-    job_id = response.json()['results'][0]['job_id']
+    csvIndex = response.json()['results'][0]['job_id']
 
     response_csv = requests.get(
-        url=f'http://data.oxylabs.io/v1/queries/{job_id}/results/normalized?format=csv&page=1',
+        url=f'http://data.oxylabs.io/v1/queries/{csvIndex}/results/normalized?format=csv&page=1',
         auth=('Martin_1AbZT', 'xydWox_1pedpi_jufsab')
     )
 
-    csv_file = BytesIO(response_csv.content)
-    filename = f"{googleWord}_results.csv"
+    csvFile = BytesIO(response_csv.content)
 
-    return StreamingResponse(csv_file, media_type="text/csv", headers={"Content-Disposition": f"attachment; filename={googleWord}"})
+    return StreamingResponse(csvFile, media_type="text/csv", headers={"Content-Disposition": f"attachment; filename={googleWord}"})
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)

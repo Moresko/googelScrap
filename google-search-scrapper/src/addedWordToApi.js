@@ -1,41 +1,42 @@
 import React, { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [keyword, setKeyword] = useState('');
+  const [googleWord, setGoogleWord] = useState('');
 
-  const handleSubmit = async (event) => {
+  const pressButton = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:8000/string', {
+    const response = await fetch('http://localhost:8000/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ value: keyword }),
+      body: JSON.stringify({ value: googleWord }),
     });
 
     if (response.ok) {
       const blob = await response.blob();
-      
-      const filename = `${keyword}_scrape.csv`;
-
+      const csv = `${googleWord}_scrapped.csv`;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = filename;  
+      link.download = csv;  
       link.click();
     }
+    setGoogleWord('')
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={pressButton}>
         <input
+          className='inpt'
           type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          value={googleWord}
+          onChange={(e) => setGoogleWord(e.target.value)}
           placeholder="vyhladat"
         />
-        <button type="submit">Stiahnut CSV</button>
+        <button className="btn" type="submit">Stiahnut CSV</button>
       </form>
     </div>
   );

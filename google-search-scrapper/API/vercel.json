@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "scraper.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/scrape",
+        "dest": "scraper.py",
+        "methods": ["POST"]
+      },
+      {
+        "src": "/results/(.*)",
+        "dest": "scraper.py",
+        "methods": ["GET"]
+      }
+    ]
+  }

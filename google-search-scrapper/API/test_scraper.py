@@ -37,14 +37,10 @@ def test_wrong_name():
 
 def test_web_scrapper_file():
     response = client.post("/string", json={"value": "hello"})  
-
     assert response.status_code == 200  
-
     assert response.headers["Content-Type"].startswith("text/csv")
-
     assert "Content-Disposition" in response.headers
     assert "attachment; filename=" in response.headers["Content-Disposition"]
-
     csv_content = response.content.decode("utf-8") 
     assert csv_content.strip() != ""  
 

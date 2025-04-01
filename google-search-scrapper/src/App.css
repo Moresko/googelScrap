@@ -8,3 +8,12 @@ h1{
     text-transform: uppercase;
 }
 
+.btn{
+    border: 0;
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.inpt{
+    border: 1px solid
+}
